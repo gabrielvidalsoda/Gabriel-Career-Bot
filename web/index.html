@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gabriel Career Bot</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div class="layout">
+    <header class="header">
+      <h1>Gabriel Career Bot</h1>
+      <p class="subtitle">Assistente local para currículo e entrevistas</p>
+    </header>
+
+    <main class="main">
+      <section class="chat-panel">
+        <div id="messages" class="messages" aria-live="polite"></div>
+
+        <div id="tracks" class="tracks"></div>
+
+        <form id="chat-form" class="chat-form">
+          <textarea
+            id="message-input"
+            rows="3"
+            placeholder="Digite sua mensagem ou cole seu CV..."
+            required
+          ></textarea>
+          <button type="submit" id="send-btn">Enviar</button>
+        </form>
+      </section>
+
+      <aside class="artifact-panel" id="artifact-panel" hidden>
+        <div class="artifact-header">
+          <h2>Entregável</h2>
+          <button type="button" id="download-btn">Baixar .md</button>
+        </div>
+        <pre id="artifact-content" class="artifact-content"></pre>
+      </aside>
+    </main>
+
+    <footer class="footer">
+      <span id="session-info"></span>
+      <span id="state-info"></span>
+    </footer>
+  </div>
+
+  <script src="/app.js"></script>
+</body>
+</html>
