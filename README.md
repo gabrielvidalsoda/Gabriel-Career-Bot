@@ -1,14 +1,14 @@
-# Gabriel Career Bot
+﻿# Gabriel Career Bot
 
-Assistente interativo local para profissionais de tecnologia melhorarem currículo e se prepararem para entrevistas.
+Assistente interativo local para profissionais de tecnologia melhorarem currÃ­culo e se prepararem para entrevistas.
 
 ## Quick start
 
 ```powershell
-cd "c:\Users\gabri\OneDrive\Documentos\Gabriel Career Bot"
+cd Gabriel-Career-Bot
 poetry install
 Copy-Item .env.example .env
-# Edite .env: OPENAI_API_KEY e, se necessário, KNOWLEDGE_PACK_PATH
+# Edite .env: OPENAI_API_KEY e, se necessÃ¡rio, KNOWLEDGE_PACK_PATH
 poetry run uvicorn app.main:app --reload --port 8080
 ```
 
@@ -18,37 +18,37 @@ Health check: http://127.0.0.1:8080/api/health
 
 ## O que faz (MVP)
 
-- Chat web com 3 trilhas: **Melhorar CV**, **Adaptar CV à vaga**, **Preparar entrevista RH**
-- Coleta guiada de informações do candidato
+- Chat web com 3 trilhas: **Melhorar CV**, **Adaptar CV Ã  vaga**, **Preparar entrevista RH**
+- Coleta guiada de informaÃ§Ãµes do candidato
 - Entrega artefato em markdown + download `.md`
-- Sessões persistidas em `data/sessions/*.json` (sobrevivem restart do servidor)
-- Método carregado do [knowledge-pack](../gabriel-resume-audits/knowledge-pack) via `KNOWLEDGE_PACK_PATH`
+- SessÃµes persistidas em `data/sessions/*.json` (sobrevivem restart do servidor)
+- MÃ©todo carregado do [knowledge-pack](../gabriel-resume-audits/knowledge-pack) via `KNOWLEDGE_PACK_PATH`
 
 ## Estrutura
 
 ```
 app/
   main.py           API FastAPI + static web
-  orchestrator.py   máquina de estados + LLM
-  tracks.py         definição das trilhas
+  orchestrator.py   mÃ¡quina de estados + LLM
+  tracks.py         definiÃ§Ã£o das trilhas
   knowledge.py      carrega MD por trilha
-  storage.py        JSON por sessão (adapter trocável)
+  storage.py        JSON por sessÃ£o (adapter trocÃ¡vel)
   profile.py        fatos do candidato
-web/                UI estática
-data/               sessões (gitignored)
+web/                UI estÃ¡tica
+data/               sessÃµes (gitignored)
 ```
 
 ## API
 
-| Endpoint | Descrição |
+| Endpoint | DescriÃ§Ã£o |
 |----------|-----------|
 | `GET /api/health` | Status + knowledge pack |
-| `GET /api/bootstrap?session_id=` | Greeting, trilhas, sessão |
+| `GET /api/bootstrap?session_id=` | Greeting, trilhas, sessÃ£o |
 | `POST /api/chat` | `{ session_id, message, track_id? }` |
-| `GET /api/session/{id}` | Estado da sessão |
-| `GET /api/session/{id}/artifact` | Download do entregável |
+| `GET /api/session/{id}` | Estado da sessÃ£o |
+| `GET /api/session/{id}/artifact` | Download do entregÃ¡vel |
 
-## Decisões em aberto (pós-MVP)
+## DecisÃµes em aberto (pÃ³s-MVP)
 
 Detalhes em [docs/DECISIONS.md](docs/DECISIONS.md). Resumo:
 
@@ -56,9 +56,9 @@ Detalhes em [docs/DECISIONS.md](docs/DECISIONS.md). Resumo:
 
 | Caminho | Quando |
 |---------|--------|
-| **JSON** (atual) | MVP local, 1 máquina |
-| **SQLite** | Histórico pesquisável, retomar sessões em lista |
-| **PostgreSQL** | Beta multi-usuário, espelhar produção |
+| **JSON** (atual) | MVP local, 1 mÃ¡quina |
+| **SQLite** | HistÃ³rico pesquisÃ¡vel, retomar sessÃµes em lista |
+| **PostgreSQL** | Beta multi-usuÃ¡rio, espelhar produÃ§Ã£o |
 
 Trocar storage = implementar novo adapter em `storage.py` sem mudar orchestrator.
 
@@ -67,20 +67,21 @@ Trocar storage = implementar novo adapter em `storage.py` sem mudar orchestrator
 | Caminho | Quando |
 |---------|--------|
 | **Adiar** | Validar qualidade das respostas localmente |
-| **PaaS** (Railway/Render/Fly) | 2–3 beta testers |
+| **PaaS** (Railway/Render/Fly) | 2â€“3 beta testers |
 | **AWS** | Produto com auth, PII, escala |
 
-Career Bot precisa de **volume persistente** (diferente do Gabriel Bot portfolio, que é stateless).
+Career Bot precisa de **volume persistente** (diferente do Gabriel Bot portfolio, que Ã© stateless).
 
 ### RAG
 
-MVP usa **seleção determinística** de 2–5 arquivos MD por trilha. Migrar para RAG (Chroma/FAISS) se o knowledge-pack crescer muito.
+MVP usa **seleÃ§Ã£o determinÃ­stica** de 2â€“5 arquivos MD por trilha. Migrar para RAG (Chroma/FAISS) se o knowledge-pack crescer muito.
 
 ## Teste manual sugerido
 
 1. Escolha "Melhorar CV"
 2. Informe cargo-alvo e cole um CV
 3. Confirme com "pode gerar"
-4. Peça ajuste em um bullet
+4. PeÃ§a ajuste em um bullet
 5. Baixe o `.md`
-6. Reinicie o servidor — a sessão deve continuar (mesmo `session_id` no localStorage)
+6. Reinicie o servidor â€” a sessÃ£o deve continuar (mesmo `session_id` no localStorage)
+
